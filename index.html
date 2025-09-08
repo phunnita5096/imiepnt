@@ -22,7 +22,7 @@
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(60, innerWidth/innerHeight, 0.1, 100);
 
-  // 🔹 กล้องใกล้ขึ้น
+  // กล้องใกล้ขึ้น
   camera.position.set(0, 0.8, 1.8);
 
   const renderer = new THREE.WebGLRenderer({antialias:true});
@@ -37,7 +37,7 @@
   light.position.set(1,1,2);
   scene.add(light);
 
-  // 🔹 โหลด EXR เป็น Environment + Background
+  // โหลด EXR เป็น Environment + Background
   const pmremGenerator = new THREE.PMREMGenerator(renderer);
   pmremGenerator.compileEquirectangularShader();
 
@@ -51,18 +51,15 @@
       console.log("✅ EXR Loaded");
     });
 
-  // เก็บโมเดลเพื่อใช้ใน GUI
-  let model = null;
-
-  // 🔹 โหลด GLB
+  // โหลด GLB
   const loader = new THREE.GLTFLoader();
   loader.load('assing3.glb', (gltf)=>{
-    model = gltf.scene;
+    const model = gltf.scene;
     model.scale.set(0.5,0.5,0.5);
     scene.add(model);
     console.log("✅ GLB Loaded");
 
-    // ใช้ dat.GUI ควบคุม material
+    // dat.GUI เฉพาะ Material
     model.traverse((child)=>{
       if(child.isMesh){
         child.material.metalness = 0.5;
